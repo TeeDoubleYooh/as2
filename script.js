@@ -79,13 +79,16 @@ let playerTop = 0;
 let playerLeft = 0;
 
 setInterval(function () {
+
+    pointCheck();
+
     if (downPressed) {
         let position = player.getBoundingClientRect()
         let newBottom = position.bottom + 1;
-        
+
         let btmL = document.elementFromPoint(position.left, newBottom)
         let btmR = document.elementFromPoint(position.right, newBottom)
-        if (btmL.classList.contains('wall') == false && btmR.classList.contains('wall') == false){
+        if (btmL.classList.contains('wall') == false && btmR.classList.contains('wall') == false) {
             playerTop++;
             player.style.top = playerTop + 'px';
         }
@@ -94,10 +97,10 @@ setInterval(function () {
     else if (upPressed) {
         let position = player.getBoundingClientRect()
         let newTop = position.top - 1;
-        
+
         let topL = document.elementFromPoint(position.left, newTop)
         let topR = document.elementFromPoint(position.right, newTop)
-        if (topL.classList.contains('wall') == false && topR.classList.contains('wall') == false){
+        if (topL.classList.contains('wall') == false && topR.classList.contains('wall') == false) {
             playerTop--;
             player.style.top = playerTop + 'px';
         }
@@ -106,10 +109,10 @@ setInterval(function () {
     else if (leftPressed) {
         let position = player.getBoundingClientRect()
         let newLeft = position.left - 1;
-        
+
         let topL = document.elementFromPoint(newLeft, position.top)
         let btmL = document.elementFromPoint(newLeft, position.bottom)
-        if (topL.classList.contains('wall') == false && btmL.classList.contains('wall') == false){
+        if (topL.classList.contains('wall') == false && btmL.classList.contains('wall') == false) {
             playerLeft--;
             player.style.left = playerLeft + 'px';
         }
@@ -118,10 +121,10 @@ setInterval(function () {
     else if (rightPressed) {
         let position = player.getBoundingClientRect()
         let newRight = position.right + 1;
-        
+
         let topR = document.elementFromPoint(newRight, position.top)
         let btmR = document.elementFromPoint(newRight, position.bottom)
-        if (topR.classList.contains('wall') == false && btmR.classList.contains('wall') == false){
+        if (topR.classList.contains('wall') == false && btmR.classList.contains('wall') == false) {
             playerLeft++;
             player.style.left = playerLeft + 'px';
         }
@@ -129,15 +132,46 @@ setInterval(function () {
     }
 }, 10);
 
+function pointCheck() {
+    const position = player.getBoundingClientRect();
+    const points = document.querySelectorAll('.point');
+
+    for (let i = 0; i < points.length; i++) {
+        let pos = points[i].getBoundingClientRect();
+        if (
+            position.right > pos.left &&
+            position.left < pos.right &&
+            position.bottom > pos.top &&
+            position.top < pos.bottom
+        ) {
+            points[i].classList.remove('point');
+        }
+    }
+}
+
+// custom colour changing start
+const colours = document.querySelectorAll('li');
+for (let i = 0; i < colours.length; i++) {
+    colours[i].addEventListener('click', setColor);
+}
+function setColor() {
+    player.style.backgroundColor = this.id;
+}
+// end
+
+
+
 
 
 
 const start = document.querySelector('#startButton');
 function startGame() {
-    
+
     start.style.display = 'none';
     document.addEventListener('keydown', keyDown);
     document.addEventListener('keyup', keyUp);
 }
 
 start.addEventListener('click', startGame);
+
+
