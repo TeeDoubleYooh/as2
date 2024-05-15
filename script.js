@@ -80,23 +80,51 @@ let playerLeft = 0;
 
 setInterval(function () {
     if (downPressed) {
-        playerTop++;
-        player.style.top = playerTop + 'px';
+        let position = player.getBoundingClientRect()
+        let newBottom = position.bottom + 1;
+        
+        let btmL = document.elementFromPoint(position.left, newBottom)
+        let btmR = document.elementFromPoint(position.right, newBottom)
+        if (btmL.classList.contains('wall') == false && btmR.classList.contains('wall') == false){
+            playerTop++;
+            player.style.top = playerTop + 'px';
+        }
         playerMouth.classList = 'down';
     }
     else if (upPressed) {
-        playerTop--;
-        player.style.top = playerTop + 'px';
+        let position = player.getBoundingClientRect()
+        let newTop = position.top - 1;
+        
+        let topL = document.elementFromPoint(position.left, newTop)
+        let topR = document.elementFromPoint(position.right, newTop)
+        if (topL.classList.contains('wall') == false && topR.classList.contains('wall') == false){
+            playerTop--;
+            player.style.top = playerTop + 'px';
+        }
         playerMouth.classList = 'up';
     }
     else if (leftPressed) {
-        playerLeft--;
-        player.style.left = playerLeft + 'px';
+        let position = player.getBoundingClientRect()
+        let newLeft = position.left - 1;
+        
+        let topL = document.elementFromPoint(newLeft, position.top)
+        let btmL = document.elementFromPoint(newLeft, position.bottom)
+        if (topL.classList.contains('wall') == false && btmL.classList.contains('wall') == false){
+            playerLeft--;
+            player.style.left = playerLeft + 'px';
+        }
         playerMouth.classList = 'left';
     }
     else if (rightPressed) {
-        playerLeft++;
-        player.style.left = playerLeft + 'px';
+        let position = player.getBoundingClientRect()
+        let newRight = position.right + 1;
+        
+        let topR = document.elementFromPoint(newRight, position.top)
+        let btmR = document.elementFromPoint(newRight, position.bottom)
+        if (topR.classList.contains('wall') == false && btmR.classList.contains('wall') == false){
+            playerLeft++;
+            player.style.left = playerLeft + 'px';
+        }
         playerMouth.classList = 'right';
     }
 }, 10);
