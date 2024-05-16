@@ -113,14 +113,7 @@ main {
 .ColourChange{
     grid-area: colchange;
     width: 450px;
-   
-    
-    transform: translate(0, 0);
-    
-    
-    
-    
-    padding: 20px;
+    transform: translate(0, 0); 
 }
 .ColourChange ul{
     list-style-type: none;

@@ -8,16 +8,47 @@ const main = document.querySelector('main');
 //Player = 2, Wall = 1, Enemy = 3, Point = 0
 let maze = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 2, 0, 1, 0, 0, 0, 0, 3, 1],
+    [1, 2, 0, 1, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 1, 1, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 1, 1, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 1, 1, 1],
-    [1, 0, 0, 1, 0, 3, 0, 0, 0, 1],
+    [1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 1, 0, 1],
-    [1, 3, 1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
+
+//Random Enemy Testing
+// function randomEnemy() {
+//     let row = Math.floor(Math.random() * maze.length);
+//     let column = Math.floor(Math.random() * maze[row].length);
+
+//     if (maze[row][column] !== maze[0]) {
+//         maze[row][column] = 3;
+//     }
+// }
+function randomEnemy() {
+    let row, column;
+    do {
+        row = Math.floor(Math.random() * maze.length);
+        column = Math.floor(Math.random() * maze[row].length);
+    } while (maze[row][column] !== 0);
+    maze[row][column] = 3;
+}
+
+
+
+randomEnemy();
+randomEnemy();
+randomEnemy();
+
+//random enemy movement
+
+
+
+
+
 
 //Populates the maze in the HTML
 for (let y of maze) {
@@ -36,6 +67,8 @@ for (let y of maze) {
                 block.appendChild(mouth);
                 break;
             case 3:
+                //
+                //
                 block.classList.add('enemy');
                 break;
             default:
@@ -168,8 +201,13 @@ const start = document.querySelector('#startButton');
 function startGame() {
 
     start.style.display = 'none';
+
     document.addEventListener('keydown', keyDown);
     document.addEventListener('keyup', keyUp);
+
+   
+
+
 }
 
 start.addEventListener('click', startGame);
