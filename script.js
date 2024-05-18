@@ -22,7 +22,7 @@ let maze = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
 
-
+console.log(maze)
 
 //Random Enemy Testing
 // function randomEnemy() {
@@ -139,63 +139,63 @@ setInterval(function moveEnemy() {
     enemies = document.querySelectorAll('.enemy');
 
     enemies.forEach(enemy => {
-        let enemyPos = enemy.getBoundingClientRect();
+        let posEnemy = enemy.getBoundingClientRect();
         let direction = enemy.direction || randomNumber();
-        let enemyTop = parseInt(enemy.style.top) || 0;
-        let enemyLeft = parseInt(enemy.style.left) || 0;
+        let topEnemy = parseInt(enemy.style.top) || 0;
+        let leftEnemy = parseInt(enemy.style.left) || 0;
 
-        switch (direction) {
-            case 1: // MOVE DOWN
-                newBottom = enemyPos.bottom + 1;
-                btmL = document.elementFromPoint(enemyPos.left, newBottom);
-                btmR = document.elementFromPoint(enemyPos.right, newBottom);
+        switch (direction) { // Enemy moving down
+            case 1: 
+                newBottom = posEnemy.bottom + 1;
+                btmL = document.elementFromPoint(posEnemy.left, newBottom);
+                btmR = document.elementFromPoint(posEnemy.right, newBottom);
 
                 if (!btmL.classList.contains('wall') && !btmR.classList.contains('wall')) {
-                    enemyTop++;
+                    topEnemy++;
                 } else {
                     direction = randomNumber();
                 }
                 break;
-
-            case 2: // MOVE UP
-                newTop = enemyPos.top - 1;
-                topL = document.elementFromPoint(enemyPos.left, newTop);
-                topR = document.elementFromPoint(enemyPos.right, newTop);
+                // Enemy moving up
+            case 2: 
+                newTop = posEnemy.top - 1;
+                topL = document.elementFromPoint(posEnemy.left, newTop);
+                topR = document.elementFromPoint(posEnemy.right, newTop);
 
                 if (!topL.classList.contains('wall') && !topR.classList.contains('wall')) {
-                    enemyTop--;
+                    topEnemy--;
                 } else {
                     direction = randomNumber();
                 }
                 break;
-
-            case 3: // MOVE LEFT
-                newLeft = enemyPos.left - 1;
-                leftTop = document.elementFromPoint(newLeft, enemyPos.top);
-                leftBottom = document.elementFromPoint(newLeft, enemyPos.bottom);
+                // Enemy moving left
+            case 3: 
+                newLeft = posEnemy.left - 1;
+                leftTop = document.elementFromPoint(newLeft, posEnemy.top);
+                leftBottom = document.elementFromPoint(newLeft, posEnemy.bottom);
 
                 if (!leftTop.classList.contains('wall') && !leftBottom.classList.contains('wall')) {
-                    enemyLeft--;
+                    leftEnemy--;
                 } else {
                     direction = randomNumber();
                 }
                 break;
-
-            case 4: // MOVE RIGHT
-                newRight = enemyPos.right + 1;
-                rightTop = document.elementFromPoint(newRight, enemyPos.top);
-                rightBottom = document.elementFromPoint(newRight, enemyPos.bottom);
+                // Enemy moving right
+            case 4: 
+                newRight = posEnemy.right + 1;
+                rightTop = document.elementFromPoint(newRight, posEnemy.top);
+                rightBottom = document.elementFromPoint(newRight, posEnemy.bottom);
 
                 if (!rightTop.classList.contains('wall') && !rightBottom.classList.contains('wall')) {
-                    enemyLeft++;
+                    leftEnemy++;
                 } else {
                     direction = randomNumber();
                 }
                 break;
         }
 
-        enemy.style.top = enemyTop + 'px';
-        enemy.style.left = enemyLeft + 'px';
+        enemy.style.top = topEnemy + 'px';
+        enemy.style.left = leftEnemy + 'px';
         enemy.direction = direction;
     });
 }, 10);
@@ -397,6 +397,8 @@ function enemyCollision() {
 
 
         function endGame() {
+            
+            myHeader.innerText = "Game Over";
             player.classList.add('dead')
             holdEnemy = true;
             restart.style.display = 'flex';
@@ -414,7 +416,7 @@ function enemyCollision() {
 
         const start = document.querySelector('#startButton');
         function startGame() {
-
+            
             start.style.display = 'none';
             holdEnemy = false;
             document.addEventListener('keydown', keyDown);
